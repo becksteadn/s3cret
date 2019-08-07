@@ -43,7 +43,10 @@ resource "aws_iam_policy" "S3Download" {
     "Statement": [
         {
             "Effect": "Allow",
-            "Action": "s3:TODO",
+            "Action": [
+                "s3:PutObject",
+                "s3:GetObject"
+            ],
             "Resource": "${aws_s3_bucket.s3cret_bucket.arn}"
         }
     ]
