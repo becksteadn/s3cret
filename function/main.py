@@ -20,10 +20,12 @@ def handler(event, context):
 
     key = gen_key(event['password'])
     cipher_suite = Fernet(key)
-    cipher_text = cipher_suite.encrypt('hello world')
 
-    s3.put_object(Bucket=bucket_name, Key='something', Body=cipher_text)
+    cipher_filename = cipher_suite.encrypt(event['filename'])
+    cipher_body = cipher_suite.encrypt('hello world')
 
-    plain_text = cipher_suite.decrypt(cipher_text)
+    s3.put_object(Bucket=bucket_name, Key=cipher_filename, Body=cipher_body)
+
+    plain_text = cipher_suite.decrypt(cipher_body)
 
     return {'success': 'true'}
