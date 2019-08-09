@@ -80,4 +80,9 @@ resource "aws_lambda_function" "s3cret" {
     handler = "main.handler"
     runtime = "python3.7"
     timeout = "5"
+    environment {
+        variables {
+            BUCKET_NAME = "${aws_s3_bucket.s3cret_bucket.bucket}"
+        }
+    }
 }
